@@ -40,7 +40,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, quickshell, catppuccin, nur, lanzaboote, spicetify-nix }:
+  outputs = { self, inputs, nixpkgs, home-manager, quickshell, catppuccin, nur, lanzaboote, spicetify-nix }:
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
