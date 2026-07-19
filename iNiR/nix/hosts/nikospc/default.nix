@@ -84,6 +84,7 @@
     variant = "";
   };
 
+  services.openssh.enable = true;
   services.xserver.enable = false;
   services.smartd.enable = false;
   services.gvfs.enable = true;

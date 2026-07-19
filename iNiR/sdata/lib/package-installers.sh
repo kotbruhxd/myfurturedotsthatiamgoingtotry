@@ -257,7 +257,11 @@ install-python-packages(){
 
   if [[ -f "$requirements_file" ]]; then
     source "$venv_dir/bin/activate"
-    x uv pip install -r "$requirements_file"
+    if [[ -f /etc/nixos ]] || [[ -f /etc/NIXOS ]]; then
+      nix-shell -p pkg-config cairo glib.dev python312 --run "source \"$venv_dir/bin/activate\" && uv pip install -r \"$requirements_file\""
+    else
+      x uv pip install -r "$requirements_file"
+    fi
     deactivate
   else
     log_warning "requirements.txt not found"
