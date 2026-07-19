@@ -282,13 +282,6 @@
     ];
   };
 
-  services.ollama = {
-    enable = true;
-    package = pkgs.ollama-cuda;
-    host = "0.0.0.0";
-    openFirewall = true;
-  };
-
   hardware.opentabletdriver.enable = true;
   services.flatpak.enable = true;
   services.power-profiles-daemon.enable = true;
