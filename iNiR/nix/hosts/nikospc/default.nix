@@ -145,6 +145,8 @@
     enable32Bit = true;
   };
 
+  hardware.nvidia.enable = true;
+
   security.rtkit.enable = true;
   security.polkit.enable = true;
   security.polkit.extraConfig = ''
