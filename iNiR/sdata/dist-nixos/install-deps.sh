@@ -37,26 +37,31 @@ fi
 # Ensure git tracks the repo (required for flakes)
 cd "${REPO_ROOT}" || exit 1
 if [ -d .git ]; then
-  # Stage all files so flake.nix can access them
   git add -A 2>/dev/null || true
 fi
 
-# Create host directory symlink if hostname differs from nikospc
-if [ "${NIX_HOSTNAME}" != "nikospc" ] && [ -d "${REPO_ROOT}/hosts/nikospc" ] && [ ! -e "${REPO_ROOT}/hosts/${NIX_HOSTNAME}" ]; then
-  printf "${STY_CYAN}Creating symlink: hosts/${NIX_HOSTNAME} -> hosts/nikospc${STY_RST}\n"
-  ln -sfn nikospc "${REPO_ROOT}/hosts/${NIX_HOSTNAME}"
+# Patch hostname and username in host configs and flake.nix
+HOST_DIR="${REPO_ROOT}/nix/hosts/nikospc"
+[ -d "${HOST_DIR}" ] || HOST_DIR="${REPO_ROOT}/hosts/nikospc"
+
+if [ -d "${HOST_DIR}" ] && [ -f "${HOST_DIR}/default.nix" ]; then
+  sed -i 's/networking.hostName = "nikospc"/networking.hostName = "'"${NIX_HOSTNAME}"'"/g' "${HOST_DIR}/default.nix"
+  sed -i 's/users.users.arseniy/users.users.'"${NIX_USERNAME}"'/g' "${HOST_DIR}/default.nix"
+  sed -i 's/description = "arseniy"/description = "'"${NIX_USERNAME}"'"/g' "${HOST_DIR}/default.nix"
 fi
 
-# Create local flake.nix with substituted values
-cp "${REPO_ROOT}/flake.nix" "${REPO_ROOT}/.flake.nix.local"
-sed -i "s/%%HOSTNAME%%/${NIX_HOSTNAME}/g" "${REPO_ROOT}/.flake.nix.local"
-sed -i "s/%%USERNAME%%/${NIX_USERNAME}/g" "${REPO_ROOT}/.flake.nix.local"
-mv "${REPO_ROOT}/.flake.nix.local" "${REPO_ROOT}/flake.nix"
+sed -i 's/home-manager.users.arseniy/home-manager.users.'"${NIX_USERNAME}"'/g' "${REPO_ROOT}/flake.nix"
 
-printf "${STY_CYAN}Running: sudo nixos-rebuild switch --flake .#${NIX_HOSTNAME} --accept-flake-config${STY_RST}\n"
+# Create host directory symlink if hostname differs from nikospc
+if [ "${NIX_HOSTNAME}" != "nikospc" ] && [ -d "${HOST_DIR}" ] && [ ! -e "$(dirname "${HOST_DIR}")/${NIX_HOSTNAME}" ]; then
+  printf "${STY_CYAN}Creating symlink: hosts/${NIX_HOSTNAME} -> hosts/nikospc${STY_RST}\n"
+  ln -sfn nikospc "$(dirname "${HOST_DIR}")/${NIX_HOSTNAME}"
+fi
+
+printf "${STY_CYAN}Running: sudo nixos-rebuild switch --flake .#nikospc --accept-flake-config${STY_RST}\n"
 echo ""
 
-sudo nixos-rebuild switch --flake ".#${NIX_HOSTNAME}" --accept-flake-config
+sudo nixos-rebuild switch --flake .#nikospc --accept-flake-config
 
 if [ $? -ne 0 ]; then
   printf "${STY_RED}nixos-rebuild failed! Check the output above for errors.${STY_RST}\n"

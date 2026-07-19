@@ -2,13 +2,10 @@
 
 {
   imports = [
-    ./home/git.nix
-    ./home/shell.nix
-    ./home/kitty.nix
+    ./git.nix
+    ./shell.nix
+    ./kitty.nix
   ];
 
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-  };
+  home.stateVersion = "24.11";
 }

@@ -11,7 +11,7 @@
       cat = "bat";
     };
     shellAliases = {
-      rebuild = "sudo nixos-rebuild switch --flake /home/arseniy/myfurturedots/iNiR#desktop";
+      rebuild = "sudo nixos-rebuild switch --flake .#nikospc";
     };
     interactiveShellInit = ''
       set -g fish_greeting ""
@@ -20,7 +20,6 @@
 
   programs.bat = {
     enable = true;
-    config.theme = "Catppuccin Mocha";
   };
 
   programs.eza = {

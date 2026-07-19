@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -243,9 +243,9 @@
 
     # ml4w specific
     waybar
-    rofi-wayland
+    rofi
     nwg-dock-hyprland
-    swaync
+    swaynotificationcenter
     wlogout
     hyprpaper
     waypaper

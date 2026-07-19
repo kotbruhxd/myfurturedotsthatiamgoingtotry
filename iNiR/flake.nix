@@ -339,7 +339,7 @@
       homeManagerModules.inir = mkHomeModule;
 
       nixosConfigurations = {
-        %%HOSTNAME%% = nixpkgs.lib.nixosSystem {
+        nikospc = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit self; inputs = self.inputs; };
           modules = [
@@ -352,15 +352,15 @@
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "hm-bak";
               home-manager.extraSpecialArgs = { inputs = self.inputs; };
-              home-manager.users.%%USERNAME%% = import ./nix/modules/home;
+              home-manager.users.arseniy = import ./nix/modules/home;
             }
             {
               nixpkgs.config.allowBroken = true;
               nixpkgs.config.allowUnfree = true;
             }
-            inputs.spicetify-nix.nixosModules.default
+            spicetify-nix.nixosModules.default
             ({ pkgs, ... }: let
-              spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.system};
+              spicePkgs = spicetify-nix.legacyPackages.${pkgs.stdenv.system};
             in {
               programs.spicetify = {
                 enable = true;

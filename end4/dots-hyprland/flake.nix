@@ -76,7 +76,7 @@
       homeManagerModules.default = self.homeModules.default;
 
       nixosConfigurations = {
-        %%HOSTNAME%% = lib.nixosSystem {
+        nikospc = lib.nixosSystem {
           inherit system;
           specialArgs = { inherit self; inputs = self.inputs; };
           modules = [
@@ -89,15 +89,15 @@
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "hm-bak";
               home-manager.extraSpecialArgs = { inputs = self.inputs; };
-              home-manager.users.%%USERNAME%% = import ./modules/home;
+              home-manager.users.arseniy = import ./modules/home;
             }
             {
               nixpkgs.config.allowBroken = true;
               nixpkgs.config.allowUnfree = true;
             }
-            inputs.spicetify-nix.nixosModules.default
+            spicetify-nix.nixosModules.default
             ({ pkgs, ... }: let
-              spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.system};
+              spicePkgs = spicetify-nix.legacyPackages.${pkgs.stdenv.system};
             in {
               programs.spicetify = {
                 enable = true;

@@ -3,18 +3,17 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../modules/ly.nix
-    ../modules/packages.nix
-    ../modules/nvidia-drivers.nix
-    ../modules/intel-drivers.nix
-    ../modules/fonts.nix
-    ../modules/portals.nix
-    ../modules/theme.nix
-    ../modules/nh.nix
-    ../modules/overlays.nix
-    ../modules/local-hardware-clock.nix
-    ../modules/quickshell.nix
-    ../modules/home
+    ../../modules/ly.nix
+    ../../modules/packages.nix
+    ../../modules/nvidia-drivers.nix
+    ../../modules/intel-drivers.nix
+    ../../modules/fonts.nix
+    ../../modules/portals.nix
+    ../../modules/theme.nix
+    ../../modules/nh.nix
+    ../../modules/overlays.nix
+    ../../modules/local-hardware-clock.nix
+    ../../modules/quickshell.nix
   ];
 
   boot.loader.systemd-boot.enable = true;

@@ -14,7 +14,6 @@
     ../../modules/overlays.nix
     ../../modules/local-hardware-clock.nix
     ../../modules/quickshell.nix
-    ../../modules/home
   ];
 
   boot.loader.systemd-boot.enable = true;
