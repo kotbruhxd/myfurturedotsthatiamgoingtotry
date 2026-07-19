@@ -3,7 +3,6 @@
 {
   environment.systemPackages = with pkgs; [
     # iNiR runtime deps
-    niri
     brightnessctl
     playerctl
     grim

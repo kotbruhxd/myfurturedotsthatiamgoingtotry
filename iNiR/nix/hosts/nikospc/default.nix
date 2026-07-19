@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/niri.nix
     ../../modules/ly.nix
     ../../modules/packages.nix
     ../../modules/nvidia-drivers.nix
