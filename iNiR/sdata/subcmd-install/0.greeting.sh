@@ -136,3 +136,34 @@ if $ask; then
     fi
     echo ""
 fi
+
+#####################################################################################
+# Hostname & Username Configuration (NixOS)
+#####################################################################################
+if [[ "$IS_NIXOS" == "true" ]]; then
+    tui_title "NixOS Configuration"
+    
+    # Default hostname
+    NIX_HOSTNAME="${NIX_HOSTNAME:-nikospc}"
+    NIX_USERNAME="${NIX_USERNAME:-$(whoami)}"
+    
+    printf "${STY_CYAN}Enter hostname for this machine:${STY_RST}\n"
+    printf "${STY_CYAN}  (press Enter to use: ${NIX_HOSTNAME})${STY_RST}\n"
+    read -p " ===> " input_hostname
+    if [[ -n "$input_hostname" ]]; then
+        NIX_HOSTNAME="$input_hostname"
+    fi
+    
+    printf "${STY_CYAN}Enter username:${STY_RST}\n"
+    printf "${STY_CYAN}  (press Enter to use: ${NIX_USERNAME})${STY_RST}\n"
+    read -p " ===> " input_username
+    if [[ -n "$input_username" ]]; then
+        NIX_USERNAME="$input_username"
+    fi
+    
+    export NIX_HOSTNAME NIX_USERNAME
+    
+    tui_key_value "Hostname:" "$NIX_HOSTNAME"
+    tui_key_value "Username:" "$NIX_USERNAME"
+    echo ""
+fi

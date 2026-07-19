@@ -12,8 +12,8 @@ fi
 detect_project
 detect_nixos
 
-# Set hostname
-NIX_HOSTNAME="nikospc"
+# Use hostname from prompt or default
+NIX_HOSTNAME="${NIX_HOSTNAME:-nikospc}"
 
 printf "${STY_CYAN}[$0]: NixOS declarative installation${STY_RST}\n"
 printf "${STY_CYAN}Repo root: ${REPO_ROOT}${STY_RST}\n"

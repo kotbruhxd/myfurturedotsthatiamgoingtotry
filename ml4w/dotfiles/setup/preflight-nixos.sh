@@ -13,11 +13,36 @@ resolve_repo_root
 detect_project
 detect_nixos
 
+# Default hostname and username
+NIX_HOSTNAME="${NIX_HOSTNAME:-nikospc}"
+NIX_USERNAME="${NIX_USERNAME:-$(whoami)}"
+
 echo "=== ML4W Dotfiles - NixOS Installation ==="
 echo ""
+
+# Prompt for hostname
+echo "Enter hostname for this machine:"
+echo "  (press Enter to use: ${NIX_HOSTNAME})"
+read -r -p " ===> " input_hostname
+if [[ -n "$input_hostname" ]]; then
+  NIX_HOSTNAME="$input_hostname"
+fi
+
+# Prompt for username
+echo "Enter username:"
+echo "  (press Enter to use: ${NIX_USERNAME})"
+read -r -p " ===> " input_username
+if [[ -n "$input_username" ]]; then
+  NIX_USERNAME="$input_username"
+fi
+
+export NIX_HOSTNAME NIX_USERNAME
+
+echo ""
+echo "Hostname: ${NIX_HOSTNAME}"
+echo "Username: ${NIX_USERNAME}"
 echo "Repo root: ${REPO_ROOT}"
 echo "Project: ${PROJECT}"
-echo "Hostname: nikospc"
 echo ""
 
 # Ensure git is available

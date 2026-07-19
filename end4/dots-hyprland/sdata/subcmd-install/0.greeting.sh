@@ -48,3 +48,34 @@ case $ask in
     printf "${STY_RST}"
     ;;
 esac
+
+#####################################################################################
+# Hostname & Username Configuration (NixOS)
+#####################################################################################
+if [[ "$IS_NIXOS" == "true" ]]; then
+  printf "${STY_CYAN}=== NixOS Configuration ===${STY_RST}\n"
+  
+  # Default hostname
+  NIX_HOSTNAME="${NIX_HOSTNAME:-nikospc}"
+  NIX_USERNAME="${NIX_USERNAME:-$(whoami)}"
+  
+  printf "${STY_CYAN}Enter hostname for this machine:${STY_RST}\n"
+  printf "${STY_CYAN}  (press Enter to use: ${NIX_HOSTNAME})${STY_RST}\n"
+  read -p " ===> " input_hostname
+  if [[ -n "$input_hostname" ]]; then
+    NIX_HOSTNAME="$input_hostname"
+  fi
+  
+  printf "${STY_CYAN}Enter username:${STY_RST}\n"
+  printf "${STY_CYAN}  (press Enter to use: ${NIX_USERNAME})${STY_RST}\n"
+  read -p " ===> " input_username
+  if [[ -n "$input_username" ]]; then
+    NIX_USERNAME="$input_username"
+  fi
+  
+  export NIX_HOSTNAME NIX_USERNAME
+  
+  printf "${STY_GREEN}Hostname: ${NIX_HOSTNAME}${STY_RST}\n"
+  printf "${STY_GREEN}Username: ${NIX_USERNAME}${STY_RST}\n"
+  printf "\n"
+fi
