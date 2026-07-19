@@ -8,7 +8,7 @@ Three dotfiles configs for Hyprland/Niri on NixOS with shared host `nikospc`.
 
 | Project | Directory | Compositor |
 |---------|-----------|------------|
-| iNiR | `iNiR/` | Niri (+ Hyprland) |
+| iNiR | `iNiR/` | Niri |
 | end4 | `end4/dots-hyprland/` | Hyprland |
 | ml4w | `ml4w/dotfiles/` | Hyprland |
 

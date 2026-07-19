@@ -8,7 +8,7 @@ English | [Русский](#установка)
 
 | Проект | Директория | Композитор |
 |--------|------------|------------|
-| iNiR | `iNiR/` | Niri (+ Hyprland) |
+| iNiR | `iNiR/` | Niri |
 | end4 | `end4/dots-hyprland/` | Hyprland |
 | ml4w | `ml4w/dotfiles/` | Hyprland |
 
