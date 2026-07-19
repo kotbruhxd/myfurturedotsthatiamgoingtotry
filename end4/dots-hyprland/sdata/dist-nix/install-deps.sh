@@ -5,13 +5,15 @@
 
 # shellcheck shell=bash
 
-# Resolve repo root and set hostname
+# Resolve repo root, hostname, and username
 resolve_repo_root
 NIX_HOSTNAME="${NIX_HOSTNAME:-nikospc}"
+NIX_USERNAME="${NIX_USERNAME:-$(whoami)}"
 
 printf "${STY_CYAN}[$0]: NixOS declarative installation${STY_RST}\n"
 printf "${STY_CYAN}Repo root: ${REPO_ROOT}${STY_RST}\n"
 printf "${STY_CYAN}Hostname: ${NIX_HOSTNAME}${STY_RST}\n"
+printf "${STY_CYAN}Username: ${NIX_USERNAME}${STY_RST}\n"
 echo ""
 
 # Verify we have a flake.nix
@@ -31,6 +33,18 @@ cd "${REPO_ROOT}" || exit 1
 if [ -d .git ]; then
   git add -A 2>/dev/null || true
 fi
+
+# Create host directory symlink if hostname differs from nikospc
+if [ "${NIX_HOSTNAME}" != "nikospc" ] && [ -d "${REPO_ROOT}/hosts/nikospc" ] && [ ! -e "${REPO_ROOT}/hosts/${NIX_HOSTNAME}" ]; then
+  printf "${STY_CYAN}Creating symlink: hosts/${NIX_HOSTNAME} -> hosts/nikospc${STY_RST}\n"
+  ln -sfn nikospc "${REPO_ROOT}/hosts/${NIX_HOSTNAME}"
+fi
+
+# Create local flake.nix with substituted values
+cp "${REPO_ROOT}/flake.nix" "${REPO_ROOT}/.flake.nix.local"
+sed -i "s/%%HOSTNAME%%/${NIX_HOSTNAME}/g" "${REPO_ROOT}/.flake.nix.local"
+sed -i "s/%%USERNAME%%/${NIX_USERNAME}/g" "${REPO_ROOT}/.flake.nix.local"
+mv "${REPO_ROOT}/.flake.nix.local" "${REPO_ROOT}/flake.nix"
 
 printf "${STY_CYAN}Running: sudo nixos-rebuild switch --flake .#${NIX_HOSTNAME} --accept-flake-config${STY_RST}\n"
 echo ""

@@ -57,6 +57,18 @@ if [ -d .git ]; then
   git add -A 2>/dev/null || true
 fi
 
+# Create host directory symlink if hostname differs from nikospc
+if [ "${NIX_HOSTNAME}" != "nikospc" ] && [ -d "${REPO_ROOT}/hosts/nikospc" ] && [ ! -e "${REPO_ROOT}/hosts/${NIX_HOSTNAME}" ]; then
+  echo "Creating symlink: hosts/${NIX_HOSTNAME} -> hosts/nikospc"
+  ln -sfn nikospc "${REPO_ROOT}/hosts/${NIX_HOSTNAME}"
+fi
+
+# Create local flake.nix with substituted values
+cp "${REPO_ROOT}/flake.nix" "${REPO_ROOT}/.flake.nix.local"
+sed -i "s/%%HOSTNAME%%/${NIX_HOSTNAME}/g" "${REPO_ROOT}/.flake.nix.local"
+sed -i "s/%%USERNAME%%/${NIX_USERNAME}/g" "${REPO_ROOT}/.flake.nix.local"
+mv "${REPO_ROOT}/.flake.nix.local" "${REPO_ROOT}/flake.nix"
+
 echo "Running: sudo nixos-rebuild switch --flake .#${NIX_HOSTNAME} --accept-flake-config"
 echo ""
 

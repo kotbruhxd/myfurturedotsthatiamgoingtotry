@@ -339,7 +339,7 @@
       homeManagerModules.inir = mkHomeModule;
 
       nixosConfigurations = {
-        nikospc = nixpkgs.lib.nixosSystem {
+        %%HOSTNAME%% = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit self inputs; };
           modules = [
@@ -352,7 +352,7 @@
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "hm-bak";
               home-manager.extraSpecialArgs = { inherit inputs; };
-              home-manager.users.arseniy = import ./nix/modules/home;
+              home-manager.users.%%USERNAME%% = import ./nix/modules/home;
             }
             {
               nixpkgs.config.allowBroken = true;
