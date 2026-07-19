@@ -40,7 +40,7 @@
     };
   };
 
-  outputs = { self, inputs, nixpkgs, home-manager, quickshell, catppuccin, nur, lanzaboote, spicetify-nix }:
+  outputs = { self, nixpkgs, home-manager, quickshell, catppuccin, nur, lanzaboote, spicetify-nix }:
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
@@ -78,7 +78,7 @@
       nixosConfigurations = {
         %%HOSTNAME%% = lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit self inputs; };
+          specialArgs = { inherit self; inputs = self.inputs; };
           modules = [
             ./hosts/nikospc
             home-manager.nixosModules.home-manager
@@ -88,7 +88,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "hm-bak";
-              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.extraSpecialArgs = { inputs = self.inputs; };
               home-manager.users.%%USERNAME%% = import ./modules/home;
             }
             {
