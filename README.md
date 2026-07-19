@@ -41,23 +41,7 @@ git add -A
 sudo nixos-rebuild switch --flake .#nikospc --accept-flake-config
 ```
 
-### Dotfiles only (without NixOS)
 
-If NixOS is already configured separately, just copy configs:
-
-```bash
-# iNiR
-cp -r ~/myfurturedots/iNiR/dots/.config/* ~/.config/
-cp -r ~/myfurturedots/iNiR/dots/.local/* ~/.local/
-
-# end4
-cp -r ~/myfurturedots/end4/dots-hyprland/dots/.config/* ~/.config/
-cp -r ~/myfurturedots/end4/dots-hyprland/dots/.local/* ~/.local/
-
-# ml4w
-cp -r ~/myfurturedots/ml4w/dotfiles/dotfiles/.config/* ~/.config/
-cp ~/myfurturedots/ml4w/dotfiles/dotfiles/.gtkrc-2.0 ~/
-```
 
 ## Structure
 
